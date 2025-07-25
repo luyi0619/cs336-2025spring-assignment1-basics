@@ -1,6 +1,16 @@
 from __future__ import annotations
 
+import sys
 import os
+
+# Get the absolute path to the directory containing the module
+# For example, if 'my_module.py' is in '../other_directory', use:
+module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'cs336_basics'))
+
+# Add the path to sys.path
+sys.path.insert(0, module_path) # or sys.path.append(module_path)
+
+
 from typing import IO, Any, BinaryIO
 from collections.abc import Iterable
 from jaxtyping import Float, Int
@@ -9,6 +19,7 @@ import numpy.typing as npt
 import torch
 from torch import Tensor
 
+from tokenizer import train_bpe, Tokenizer
 
 
 def run_linear(
@@ -558,7 +569,7 @@ def get_tokenizer(
     Returns:
         A BPE tokenizer that uses the provided vocab, merges, and special tokens.
     """
-    raise NotImplementedError
+    return Tokenizer(vocab, merges, special_tokens)
 
 
 def run_train_bpe(
@@ -588,4 +599,4 @@ def run_train_bpe(
                 representing that <token1> was merged with <token2>.
                 Merges are ordered by order of creation.
     """
-    raise NotImplementedError
+    return train_bpe(input_path, vocab_size, special_tokens)
