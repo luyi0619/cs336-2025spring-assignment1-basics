@@ -21,7 +21,7 @@ from torch import Tensor
 
 from tokenizer import train_bpe, Tokenizer
 from model import Linear, Embedding, RMSNorm, SwiGLU, RotaryPositionalEmbedding, MultiHeadSelfAttention, TransformerBlock, TransformerLM, silu, softmax, attention
-
+from optimizer import gradient_clipping
 
 def run_linear(
     d_in: int,
@@ -504,7 +504,7 @@ def run_gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm:
 
     The gradients of the parameters (parameter.grad) should be modified in-place.
     """
-    raise NotImplementedError
+    gradient_clipping(parameters, max_l2_norm)
 
 
 def get_adamw_cls() -> type[torch.optim.Optimizer]:
