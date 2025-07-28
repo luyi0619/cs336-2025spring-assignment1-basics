@@ -21,7 +21,7 @@ from torch import Tensor
 
 from tokenizer import train_bpe, Tokenizer
 from model import Linear, Embedding, RMSNorm, SwiGLU, RotaryPositionalEmbedding, MultiHeadSelfAttention, TransformerBlock, TransformerLM, silu, softmax, attention
-from optimizer import gradient_clipping
+from optimizer import gradient_clipping, learning_rate_schedule
 
 def run_linear(
     d_in: int,
@@ -539,7 +539,7 @@ def run_get_lr_cosine_schedule(
     Returns:
         Learning rate at the given iteration under the specified schedule.
     """
-    raise NotImplementedError
+    return learning_rate_schedule(it, max_learning_rate, min_learning_rate, warmup_iters, cosine_cycle_iters)
 
 
 def run_save_checkpoint(
